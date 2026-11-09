@@ -45,3 +45,10 @@ Exports from the package root:
 - `parseMappedAddress(value)`, `serializeMappedAddress(port, host)`.
 
 Address objects have the shape `{ family, port, host }`, where `family` is `1` for IPv4 and `2` for IPv6.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
